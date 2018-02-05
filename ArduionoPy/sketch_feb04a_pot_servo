@@ -1,0 +1,25 @@
+#include <Servo.h>
+Servo myServo;
+
+int const potPin = A0; //set potentiometer as analog input write to servo angle output
+int potVal; //create potentiometer variable
+int angle; //create angle of potentiometer variable
+
+void setup() {
+  // put your setup code here, to run once:
+  myServo.attach(9);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  potVal = analogRead(potPin); //reads potentiometer on board @ A0
+  //Serial.print("Potentiometer value: ");
+  //Serial.print(potVal);
+  angle = map(potVal, 0, 1023, 1, 20); //map function to scale numbers that range from 0-1023 to 1-20 to work with vpython
+  //Serial.print(", the angle is: ");
+  Serial.println(angle);
+  myServo.write(angle);
+  delay(1000); //slow down for better response time with vpython
+
+}
