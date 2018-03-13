@@ -1,0 +1,58 @@
+#include <Servo.h>
+Servo myServo;
+
+int const potPin = A0; //set potentiometer as analog input write to servo angle output
+int potVal; //create potentiometer variable
+int angle; //create angle of potentiometer variable
+int const sensorPin = A5; //set temp as analog input write to color output
+float const baselineTemp = 20.0;
+int r;
+int g;
+int b;
+
+void setup() {
+  // put your setup code here, to run once:
+  myServo.attach(9);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  potVal = analogRead(potPin); //reads potentiometer on board @ A0
+  //Serial.print("Potentiometer value: ");
+  //Serial.print(potVal);
+  angle = map(potVal, 0, 1023, 1, 20); //map function to scale numbers that range from 0-1023 to 1-20 to work with vpython 1-179 for 180 range
+  //Serial.print(", the angle is: ");
+  Serial.println(angle);
+  myServo.write(angle);
+  delay(1000); //slow down for better response time with vpython
+  int sensorVal = analogRead(sensorPin);
+  // Convert the sensor input ADC reading to voltage
+  float voltage = (sensorVal/1024.0) * 5.0;
+  // Convert voltage to temp in degrees C
+  float temperature = (voltage - 0.5) * 100;
+  if (temperature < baselineTemp) {
+    r = 0;
+    g = 0;
+    b = 0;
+  } else if (temperature >= baselineTemp+2) && (temperature < baselineTemp + 4){
+    r = 0;
+    g = 0;
+    b = 255;
+  }  else if (temperature >= baselineTemp+4) && (temperature < baselineTemp + 6){
+    r = 0;
+    g = 255;
+    b = 0;
+  }  else if (temperature >= baselineTemp+6){
+    r = 255;
+    g = 0;
+    b = 0;
+  }
+  delay(1);
+
+  }
+  Serial.println(r);
+  Serial.println(g);
+  Serial.println(b);
+
+}

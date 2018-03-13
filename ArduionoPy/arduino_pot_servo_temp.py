@@ -7,8 +7,10 @@ from visual import *
 # upload sketch_feb04a_pot_servo to Arduino before running
 
 arduinoSerialData = serial.Serial('/dev/cu.usbmodem1411', 9600)  # set input from Arduino serial port
-measuringRod = cylinder(title="MyCyli", radius =.5, length=1, color=color.magenta, pos=(-10,-2,0))  # define cylinder visual python
-lengthlabel = label(pos=(0, 0, 0), text='Cyli length is: ', box=True, height=20)
+#measuringRod = cylinder(title="MyCyli", radius =.5, length=1, color=color.magenta, pos=(-10,-2,0))  # define cylinder visual python
+spring = helix(pos=(0,2,1), axis=(5,0,0), radius=5, color=color.green, length=1, coils=7)
+lengthlabel = label(pos=(-10, 5, 0), text='Helix length is: ', box=True, height=20)
+mood = pyramid(pos=(5,2,0), size=(12,6,4))
 
 
 while 1 == 1:  # Loop FOREVER
@@ -17,7 +19,7 @@ while 1 == 1:  # Loop FOREVER
         myData = arduinoSerialData.readline()  # read the data from serial connection
         print myData
         distance = float(myData)  # convert myData to float type
-        measuringRod.length=distance  # change the length of the cylinder based on input from potentiometer
-        myLabel = "Adjust the Cyli's length. The length is now: " + myData
+        spring.length=distance  # change the length of the object based on input from potentiometer
+        myLabel = "Stretch the spring. The length is now: " + myData
         lengthlabel.text = myLabel
-
+        #mood.color=(r,g,b)

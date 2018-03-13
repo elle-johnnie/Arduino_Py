@@ -16,7 +16,7 @@ void loop() {
   potVal = analogRead(potPin); //reads potentiometer on board @ A0
   //Serial.print("Potentiometer value: ");
   //Serial.print(potVal);
-  angle = map(potVal, 0, 1023, 1, 20); //map function to scale numbers that range from 0-1023 to 1-20 to work with vpython
+  angle = map(potVal, 0, 1023, 1, 20); //map function to scale numbers that range from 0-1023 to 1-20 to work with vpython 1-179 for 180 range
   //Serial.print(", the angle is: ");
   Serial.println(angle);
   myServo.write(angle);
